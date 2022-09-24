@@ -5,12 +5,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
-
-
-const mongoKey = process.env.MONGO_BRS_URI;
-
-// connect to MongoDB Atlas "freeCodeCamp-PracticeCluster"
-mongoose.connect(mongoKey, { useNewUrlParser: true, useUnifidTopology: true });
+const { resourceLimits } = require('worker_threads');
 
 // error timeout
 const TIMEOUT = 10000;
@@ -34,10 +29,26 @@ app.use(function requestLogger(req, res, next){
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Serve index.html
+const mongoKey = process.env.MONGO_BRS_URI;
+
+// // connect to MongoDB Atlas "freeCodeCamp-PracticeCluster"
+const connectMongoDb = mongoose.connect(mongoKey, { useNewUrlParser: true });
+
+connectMongoDb;
+
+async function checkDbConnection() {
+    const conn = await connectMongoDb;
+    if (conn.connection.readyState === 1) {
+        console.log('Connected to DB:', mongoose.connection.name + '\n');
+    } else
+        console.log("Failed to connecdt to mongoDB\n");
+};
+
+checkDbConnection();
+
+// Confirm connection to server root
 app.get("/", (req, res) => {
-    res.send("Hello World!");
-    console.log("Hi there!");
+    res.send('Hello from the server!!');
 });
 
 // confirm post to server 
@@ -52,5 +63,5 @@ app.post("/post", (req, res) => {
 
 // listen on port 5000 or PORT variable
 const listener = app.listen(PORT, () => {
-    console.log(`Server is listening on PORT ${PORT}\n`);
+    console.log(`\nServer is listening on PORT ${PORT}\n`);
 });
