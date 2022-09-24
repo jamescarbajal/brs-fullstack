@@ -1,15 +1,16 @@
+require('dotenv').config();
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
-let bodyParser = require('body-parser');
+const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
 
-let mongoose;
-try {
-    mongoose = require("mongoose");
-}   catch (e) {
-    console.log(e);
-}
+
+const mongoKey = process.env.MONGO_BRS_URI;
+
+// connect to MongoDB Atlas "freeCodeCamp-PracticeCluster"
+mongoose.connect(mongoKey, { useNewUrlParser: true, useUnifidTopology: true });
 
 // error timeout
 const TIMEOUT = 10000;
