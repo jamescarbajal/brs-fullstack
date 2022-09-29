@@ -41,7 +41,7 @@ async function checkDbConnection() {
     if (conn.connection.readyState === 1) {
         console.log('Connected to DB:', mongoose.connection.name + '\n');
     } else
-        console.log("Failed to connecdt to mongoDB\n");
+        console.log("Failed to connect to mongoDB\n");
 };
 
 checkDbConnection();
