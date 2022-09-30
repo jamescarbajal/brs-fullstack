@@ -7,6 +7,9 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const { resourceLimits } = require('worker_threads');
 
+// enable express
+app.use(express.json({ extended: false }));
+
 // error timeout
 const TIMEOUT = 10000;
 
@@ -29,9 +32,10 @@ app.use(function requestLogger(req, res, next){
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// MongoDB NoSQL db key
 const mongoKey = process.env.MONGO_BRS_URI;
 
-// // connect to MongoDB Atlas "freeCodeCamp-PracticeCluster"
+// connect to MongoDB Atlas "freeCodeCamp-PracticeCluster"
 const connectMongoDb = mongoose.connect(mongoKey, { useNewUrlParser: true });
 
 connectMongoDb;
@@ -57,11 +61,20 @@ app.post("/post", (req, res) => {
     console.log("Connected to server!\n");
 });
 
+// MongoDB schemas
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+    email: { type: String, required: true },
+    emailVerified: { type: Boolean },
+    firstName: { type: String },
+    lastName: { type: String }
+});
 
 
 
 
-// listen on port 5000 or PORT variable
+// listen on port 3001 or PORT variable
 const listener = app.listen(PORT, () => {
     console.log(`\nServer is listening on PORT ${PORT}\n`);
 });
