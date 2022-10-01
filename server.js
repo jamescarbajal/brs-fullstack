@@ -32,14 +32,14 @@ app.use(function requestLogger(req, res, next){
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// MongoDB NoSQL db key
+// MongoDB database key
 const mongoKey = process.env.MONGO_BRS_URI;
 
 // connect to MongoDB Atlas "freeCodeCamp-PracticeCluster"
 const connectMongoDb = mongoose.connect(mongoKey, { useNewUrlParser: true });
-
 connectMongoDb;
 
+// confirm db connection and collection
 async function checkDbConnection() {
     const conn = await connectMongoDb;
     if (conn.connection.readyState === 1) {
@@ -47,7 +47,6 @@ async function checkDbConnection() {
     } else
         console.log("Failed to connect to mongoDB\n");
 };
-
 checkDbConnection();
 
 // Confirm connection to server root
@@ -68,9 +67,38 @@ const userSchema = new Schema({
     email: { type: String, required: true },
     emailVerified: { type: Boolean },
     firstName: { type: String },
-    lastName: { type: String }
+    lastName: { type: String },
+    contact: [{
+        phone: { type: Number },
+        emailRecovery: { type: String },
+        addressId: { type: Number },
+    }]
 });
 
+const addressSchema = new Schema ({
+    userId: { type: Number, required: true },
+    address: [{
+        street: { type: String, required: true },
+        line2: { type: String },
+        city: { type: String, required: true },
+        zipCode: { type: String, required: true },
+        country: { type: String }
+    }]
+});
+
+const customerAccountSchema = new Schema ({
+    userId: { type: Number, required: true },
+    balance: { type: Number },
+    orders: { type: Number },
+
+});
+
+const ordersSchema = new Schema ({
+    userId: { type: Number, required: true },
+    items: [{
+        
+    }]
+});
 
 
 
