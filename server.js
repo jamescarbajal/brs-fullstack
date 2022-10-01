@@ -96,8 +96,11 @@ const customerAccountSchema = new Schema ({
 const ordersSchema = new Schema ({
     userId: { type: Number, required: true },
     items: [{
-        
-    }]
+        itemId: { type: Number },
+    }],
+    totalPrice: { type: Number },
+    dateOrdered: { type: Date },
+    trackingNumber: { type: String }
 });
 
 
