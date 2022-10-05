@@ -66,12 +66,17 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     email: { type: String, required: true },
     emailVerified: { type: Boolean },
+    password: { type: String, required: true },
     firstName: { type: String },
     lastName: { type: String },
-    contact: [{
-        phone: { type: Number },
-        emailRecovery: { type: String },
+    phone: { type: Number },
+    addresses: [{
         addressId: { type: Number },
+    }],
+    balance: { type: Number },
+    ordersId: { type: Number },
+    returns: [{
+        returnId: { type: Number }
     }]
 });
 
@@ -82,15 +87,10 @@ const addressSchema = new Schema ({
         line2: { type: String },
         city: { type: String, required: true },
         zipCode: { type: String, required: true },
-        country: { type: String }
+        country: { type: String },
+        shippingAddress: { type: Boolean },
+        billingAddress: { type: Boolean },  
     }]
-});
-
-const customerAccountSchema = new Schema ({
-    userId: { type: Number, required: true },
-    balance: { type: Number },
-    orders: { type: Number },
-
 });
 
 const ordersSchema = new Schema ({
@@ -100,10 +100,28 @@ const ordersSchema = new Schema ({
     }],
     totalPrice: { type: Number },
     dateOrdered: { type: Date },
-    trackingNumber: { type: String }
+    trackingNumber: { type: String },
+    return: { type: Boolean },
+    returnInfo: [{
+        inProgress: { type: Boolean },
+        startDate: { type: Date },
+        trackingNumber: { type: String },
+        completed: { type: Boolean },
+        completionDate: { type: Date }
+    }]
 });
 
-
+const beadsProductSchema = new Schema ({
+    productName: { type: String },
+    stockQuantity: { type: Number },
+    size: { type: Number },
+    image: [{
+        url: { type: String },
+    }],
+    price: { type: Number },
+    category: { type: String },
+    description: {type: String },
+});
 
 // listen on port 3001 or PORT variable
 const listener = app.listen(PORT, () => {
