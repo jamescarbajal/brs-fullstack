@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "nodemon server.js"
   },
   "author": "james carbajal",
