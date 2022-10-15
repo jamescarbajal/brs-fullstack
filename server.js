@@ -10,12 +10,6 @@ const { resourceLimits } = require('worker_threads');
 // enable express
 app.use(express.json({ extended: false }));
 
-// connect with Express
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
 // error timeout
 const TIMEOUT = 10000;
 
