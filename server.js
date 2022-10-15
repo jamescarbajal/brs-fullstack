@@ -10,6 +10,12 @@ const { resourceLimits } = require('worker_threads');
 // enable express
 app.use(express.json({ extended: false }));
 
+// connect with Express
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 // error timeout
 const TIMEOUT = 10000;
 
@@ -26,7 +32,7 @@ app.use(function (err, req, res, next){
 app.use(function requestLogger(req, res, next){
     console.log(req.method + " " + req.path + " " + req.ip + "\n");
     next();
-})
+});
 
 // enable use body-parser to read json data
 app.use(bodyParser.urlencoded({ extended: false }));
