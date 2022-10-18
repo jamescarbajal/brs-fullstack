@@ -49,9 +49,12 @@ async function checkDbConnection() {
 };
 checkDbConnection();
 
-// Confirm connection to server root
+// use express to serve files
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Serve pages to client
 app.get("/", (req, res) => {
-    res.send('Hello from the server!!');
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // confirm post to server 
