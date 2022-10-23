@@ -50,12 +50,12 @@ async function checkDbConnection() {
 checkDbConnection();
 
 // use express to serve files
-app.use(express.static(path.join(__dirname, '/brs/build')));
+app.use(express.static(path.join(__dirname, "/../brs/build")));
 
-// Serve pages to client
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, '/brs/build', 'index.html'));
-});
+// // Serve pages to client
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, '/brs/build', 'index.html'));
+// });
 
 // confirm post to server 
 app.post("/post", (req, res) => {
